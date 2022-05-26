@@ -1,0 +1,28 @@
+// @TODO: Figure out how to create a common include file for shaders to reduce overhead.
+ 
+#pragma kernel CSMain
+
+#include_with_pragmas "../Shaders/InkCommon.compute"
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float4> Result;
+
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    // TODO: insert actual code here!
+
+    //Result[id.xy] = float4(id.x & id.y, (id.x & 14)/14.0, (id.y & 14)/14.0, 0.0);
+}
+
+
+InkFloat GetInk(InkParticle p, uint i) 
+{
+    const uint size = sizeof(InkParticle) / sizeof(InkFloat);
+    InkFloat a[size] = p;
+    //if (i < size)
+    return a[i];
+    //else
+    //    return -1;
+}

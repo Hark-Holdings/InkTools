@@ -1,0 +1,36 @@
+#if SHADER_API_GLES3
+#define THREAD_COUNT 8
+#elif SHADER_API_METAL
+#define THREAD_COUNT 22
+#else
+#define THREAD_COUNT 32
+#endif
+
+/// See:
+/// https://forum.unity.com/threads/unity-is-adding-a-new-dxc-hlsl-compiler-backend-option.1086272/ 
+/// https://docs.google.com/document/d/1yHARKE5NwOGmWKZY2z3EPwSz5V_ZxTDT8RnRl521iyE/edit#
+/// https://answers.unity.com/questions/1851366/error-d3d12-profiler-is-enabled-but-stable-power-s.html
+
+#pragma use_dxc
+#pragma require Native16Bit   
+
+#define public
+#define InkFloat3 float16_t3
+#define InkFloat2 float16_t2
+#define InkFloat float16_t
+
+#define InkDouble3 float32_t3
+#define InkDouble2 float32_t2
+#define InkDouble float32_t
+
+#define InkShort uint16_t   
+
+#include_with_pragmas "../ScriptsAndShaders/InkCenterOfMass.cs"
+#include_with_pragmas "../ScriptsAndShaders/InkParticle.cs"
+#include_with_pragmas "../ScriptsAndShaders/InkSeed.cs"
+
+struct Ray
+{
+    InkFloat3 pos;
+    InkFloat3 dir;
+}; 
